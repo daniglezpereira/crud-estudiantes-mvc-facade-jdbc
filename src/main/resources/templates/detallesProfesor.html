@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Profesor</title>
+</head>
+<body>
+    <h1 th:text="'Detalles del profesor: ' 
+                + ${profesor.nombre} + ' ' 
+                + ${profesor.primerApellido} + ' '
+                + ${profesor.segundoApellido}"></h1>
+
+    <!-- Mostrar el nombre de la facultad donde trabaja el profesor -->
+    <h2 th:text="'Facultad: ' + ${profesor.facultad.nombre}"></h2>
+
+    <!-- Foto del profesor -->
+    <div th:if="${profesor.foto != null}">
+        <h2>Foto: </h2>
+        <img th:src="@{/imagenes/}+${profesor.foto}" alt="Foto del Profesor" width="200">
+    </div>
+</body>
+</html>

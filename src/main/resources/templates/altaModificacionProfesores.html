@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario Alta/Modificacion Profesor</title>
+	<style>
+		.error {
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Formulario de Alta/Modificación de Profesor</h1>
+
+	<fieldset>
+		<legend>Formulario de Alta o Modificación</legend>
+
+		<form th:action="@{/profesores/persistir}" method="post" 
+		              th:object="${profesor}" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{id}">
+			<div>
+				<label for="nombre">Nombre: </label>
+				<input type="text" id="nombre" required th:field="*{nombre}">
+				<p th:if="${#fields.hasErrors('nombre')}" 
+				   	th:errors="*{nombre}" 
+				   		class="error">Nombre Incorrecto</p>
+			</div>
+			<div>
+				<label for="primerApellido">Primer Apellido: </label>
+				<input type="text" id="primerApellido" name="primerApellido" required="required"
+					th:field="*{primerApellido}">
+					<p th:if="${#fields.hasErrors('primerApellido')}" 
+                   		th:errors="*{primerApellido}" 
+                   			class="error">Primer Apellido Incorrecto</p>
+			</div>
+			<div>
+				<label for="segundoApellido">Segundo Apellido: </label>
+				<input type="text" id="segundoApellido" name="segundoApellido" 
+						th:field="*{segundoApellido}">
+				<p th:if="${#fields.hasErrors('segundoApellido')}" 
+				   th:errors="*{segundoApellido}"
+				   class="error">Segundo Apellido Incorrecto</p>
+				</div>
+			<div>
+				<fieldset>
+					<legend>Genero</legend>
+					<label for="hombre">Hombre: </label>
+					<input type="radio" id="hombre" name="genero" value="HOMBRE" 
+							th:field="*{genero}">
+					<label for="mujer">Mujer: </label>
+					<input type="radio" id="mujer" name="genero" value="MUJER" 
+							th:field="*{genero}">
+					<label for="otro">Otro: </label>
+					<input type="radio" id="otro" name="genero" value="OTRO" 
+							th:field="*{genero}">
+				</fieldset>
+			</div>
+			<div>
+				<label for="salario">Salario: </label>
+				<input type="text" id="salario" name="salario" th:field="*{salario}">
+				<p th:if="${#fields.hasErrors('salario')}" 
+				   th:errors="*{salario}"
+				   class="error">Salario Incorrecto</p>
+			</div>
+			<div>
+				<label for="fechaAlta">Fecha de Alta: </label>
+				<input type="date" id="fechaAlta" name="fechaAlta" th:field="*{fechaAlta}">
+				<p th:if="${#fields.hasErrors('fechaAlta')}" 
+				   th:errors="*{fechaAlta}"
+				   class="error">Fecha Incorrecta</p>
+			</div>
+			<div>
+				<label for="facultades">Facultad: </label>
+				<select id="facultades" th:field="*{facultad}">
+					<option value=""></option>
+					<option th:each="fac : ${facultades}" 
+							th:value="${fac.id}" 
+							th:text="${fac.nombre}"></option>
+				</select>
+			</div>
+
+			<div>
+				<label for="file">Foto del Profesor: </label>
+				<input type="file" id="file" name="file" 
+				         title="Seleccion de la imagen del profesor">
+				<div th:if="${profesor.id != 0 and profesor.foto != null}">
+					<h4>Foto actual del profesor: </h4>
+					<img th:src="@{/imagenes/}+${profesor.foto}" alt="Foto del Profesor" width="150">
+				</div>	
+			</div>
+
+			<div>
+				<input type="submit" value="Alta/Modificacion">
+			</div>
+
+		</form>
+
+	</fieldset>
+</body>
+
+</html>

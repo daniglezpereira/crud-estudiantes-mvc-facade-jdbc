@@ -1,26 +1,33 @@
 package com.example.crud_estudiantes_springboot.services;
 
-import com.example.crud_estudiantes_springboot.entities.Facultad;
-import com.example.crud_estudiantes_springboot.repository.FacultadRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
+import org.springframework.stereotype.Service;
+
+import com.example.crud_estudiantes_springboot.entities.Facultad;
+import com.example.crud_estudiantes_springboot.repository.FacultadRepository;
+
+import lombok.RequiredArgsConstructor;
+
 @RequiredArgsConstructor
+@Service
 public class FacultadServiceImpl implements FacultadService {
 
-    private final FacultadRepository repository;
+    private final FacultadRepository facultadRepository;
 
     @Override
-    public List<Facultad> getAllFacultades() {
-        return repository.findAll();
+    public Facultad saveFacultad(Facultad facultad) {
+        return facultadRepository.save(facultad);
     }
 
     @Override
-    public Facultad findById(int id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Facultad no encontrada: " + id));
+    public List<Facultad> getAllFacultades() {
+        return facultadRepository.findAll();
+    }
+
+    @Override
+    public Facultad getFacultadById(int id) {
+        return facultadRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Facultad no encontrada con id: " + id));
     }
 }
