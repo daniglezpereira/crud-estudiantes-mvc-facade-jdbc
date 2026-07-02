@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de estudiantes</title>
+</head>
+
+<body>
+
+    <!-- 🔵 TÍTULO PRINCIPAL DE LA PÁGINA -->
+    <h1>Listado de estudiantes</h1>
+
+    <!-- 🟢 BOTÓN PARA IR AL FORMULARIO DE ALTA -->
+    <!-- Redirige al método /estudiantes/alta del controller -->
+    <a th:href="@{/estudiantes/alta}">
+        ➕ Nuevo estudiante
+    </a>
+
+    <br><br>
+
+    <!-- 🔵 TABLA PRINCIPAL DONDE SE MUESTRAN LOS ESTUDIANTES -->
+    <table border="1" cellpadding="8">
+
+        <!-- 🟢 CABECERA DE LA TABLA -->
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th>Acciones</th> <!-- botones editar/eliminar -->
+        </tr>
+
+        <!-- 🔵 RECORRIDO DE LA LISTA DE ESTUDIANTES -->
+        <!-- "estudiantes" viene del Model en el controller -->
+        <tr th:each="e : ${estudiantes}">
+
+            <!-- 🟢 MOSTRAR NOMBRE -->
+            <td th:text="${e.nombre}"></td>
+
+            <!-- 🟢 MOSTRAR APELLIDOS -->
+            <td th:text="${e.primerApellido + ' ' + e.segundoApellido}"></td>
+
+            <!-- 🟢 MOSTRAR EMAIL -->
+            <td>
+                <span th:each="c : ${e.correos}">
+                    <span th:text="${c.email}"></span><br />
+                </span>
+            </td>
+
+            <!-- 🔵 ACCIONES POR CADA ESTUDIANTE -->
+            <td>
+
+              <a th:href="@{/estudiantes/ver/{id}(id=${e.id})}">Ver Detalles</a>
+
+
+                <!-- ✏️ BOTÓN EDITAR -->
+                <!-- Envía el id al controller para cargar el formulario -->
+                <a th:href="@{/estudiantes/editar/{id}(id=${e.id})}">
+                    ✏️ Editar
+                </a>
+
+                |
+
+                <!-- 🗑️ BOTÓN ELIMINAR -->
+                <!-- Llama al endpoint eliminar/{id} -->
+                <!-- confirm() evita borrado accidental -->
+                <a th:href="@{/estudiantes/eliminar/{id}(id=${e.id})}"
+                    onclick="return confirm('¿Seguro que quieres eliminar este estudiante?')">
+                    🗑️ Eliminar
+                </a>
+
+            </td>
+
+        </tr>
+
+        <!-- 🔵 MENSAJE SI NO HAY ESTUDIANTES -->
+        <tr th:if="${#lists.isEmpty(estudiantes)}">
+            <td colspan="4" style="text-align:center;">
+                No hay estudiantes registrados
+            </td>
+        </tr>
+
+    </table>
+
+</body>
+
+</html>

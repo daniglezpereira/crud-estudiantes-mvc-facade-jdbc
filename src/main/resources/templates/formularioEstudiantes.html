@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario estudiante</title>
+</head>
+
+<body>
+
+<h1>Formulario de estudiante</h1>
+
+<!-- OBJETO PRINCIPAL -->
+<form th:action="@{/estudiantes/guardar}"
+      th:object="${estudiante}"
+      method="post" enctype="multipart/form-data">
+
+    <!-- ID oculto (para editar) -->
+    <input type="hidden" th:field="*{id}">
+
+    <!-- NOMBRE -->
+    <div>
+        <label>Nombre</label>
+        <input type="text" th:field="*{nombre}" />
+        <p th:if="${#fields.hasErrors('nombre')}"
+           th:errors="*{nombre}"></p>
+    </div>
+
+    <!-- PRIMER APELLIDO -->
+    <div>
+        <label>Primer apellido</label>
+        <input type="text" th:field="*{primerApellido}" />
+        <p th:if="${#fields.hasErrors('primerApellido')}"
+           th:errors="*{primerApellido}"></p>
+    </div>
+
+    <!-- SEGUNDO APELLIDO -->
+    <div>
+        <label>Segundo apellido</label>
+        <input type="text" th:field="*{segundoApellido}" />
+        <p th:if="${#fields.hasErrors('segundoApellido')}"
+           th:errors="*{segundoApellido}"></p>
+    </div>
+
+    <!-- EMAIL (IMPORTANTE: SIN [0]) -->
+    <div>
+        <label>Email</label>
+
+        <!-- creamos un campo simple visual -->
+        <input type="text" name="email"
+               th:value="${estudiante.correos != null and !estudiante.correos.isEmpty()
+                          ? estudiante.correos.iterator().next().email
+                          : ''}" />
+
+    </div>
+
+    <div>
+<!-- Foto del empleado-->
+       <label>Foto del estudiante:</label>
+<input type="file" name="file" accept="image/*">
+    </div>
+
+    <br>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+</body>
+</html>
