@@ -17,7 +17,7 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public List<Profesor> getAllProfesores() {
-        return profesorRepository.findAll();
+        return profesorRepository.findAllWithFacultad();
     }
 
     @Override

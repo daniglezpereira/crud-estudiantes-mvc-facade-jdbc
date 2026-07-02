@@ -50,7 +50,7 @@
             <!-- 🔵 ACCIONES POR CADA ESTUDIANTE -->
             <td>
 
-              <a th:href="@{/estudiantes/ver/{id}(id=${e.id})}">Ver Detalles</a>
+                <a th:href="@{/estudiantes/ver/{id}(id=${e.id})}">Ver Detalles</a>
 
 
                 <!-- ✏️ BOTÓN EDITAR -->
@@ -81,7 +81,9 @@
         </tr>
 
     </table>
-
+    <div>
+        <a th:href="@{/}">⬅ Volver a Inicio</a>
+    </div>
 </body>
 
 </html>
